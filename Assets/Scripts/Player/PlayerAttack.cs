@@ -6,44 +6,53 @@ public class PlayerAttack : MonoBehaviour
 {
 	#region VARIABLES
 	[Header("REFERENCIAS")]
-	[SerializeField] private InputManager m_inputManager;
+	[SerializeField] private EventManager m_eventManager;
 	[SerializeField] private Animator m_playerAnimator;
 	[SerializeField] private Transform m_attackPoint;
 
 	[Header("ATRIBUTOS")]
-	[SerializeField] private float m_attackRange = 0.5f;
-	[SerializeField] private LayerMask m_enemyLayer;
+	[SerializeField, Tooltip("Retraso entre cada ataque")] private float m_attackDelay = 1.5f; // poner tiempo que dure la animacion de ataque
+	[SerializeField, Tooltip("Área de ataque")] private float m_attackRange = 0.5f;
+	[SerializeField, Tooltip("Máscara de los afectados por el ataque")] private LayerMask m_enemyLayer;
 
 	// Variables no visibles
-	private float m_maxTimeAttack = 1.0f; // poner tiempo que dure la animacion de ataque
 	private float m_nextAttack = 0.0f;
 	#endregion
 
 	#region METODOS UNITY
-	private void Update()
+	private void Start()
 	{
-		m_nextAttack = Time.deltaTime;
-		if (m_inputManager._BasicAttack && m_nextAttack >= m_maxTimeAttack)
-		{
-			Debug.Log("Jugador atacando!");
-			BasicAttack();
-			m_nextAttack = 0.0f;
-		}
+		// SUSCRIPCIONES A EVENTOS
+		m_eventManager.OnLeftClickPressed += M_eventManager_OnLeftClickPressed;
+
+		// OTROS
 	}
 	#endregion
 
 	#region METODOS PROPIOS
+	#region EVENTOS
+	private void M_eventManager_OnLeftClickPressed(object sender, System.EventArgs e)
+	{
+		if (Time.time >= m_nextAttack)
+		{
+			Debug.Log("Jugador atacando!");
+			BasicAttack();
+			m_nextAttack = Time.time + 1.0f / m_attackDelay;
+		} // el evento ejecuta una función determinada
+	} // se llama al evento con la condicion correspondiente (mirar event manager)
+	#endregion
+	#region OTROS METODOS
 	private void BasicAttack()
 	{
 		// activar animacion de ataque basico
-		// obtiene el contacto con el collider de un enemigo en la capa de enemigos
-		Collider2D[] m_hitEnemyLayer = Physics2D.OverlapCircleAll(m_attackPoint.position, m_attackRange, m_enemyLayer);
+		Collider2D[] m_hitEnemyLayer = Physics2D.OverlapCircleAll(m_attackPoint.position, m_attackRange, m_enemyLayer); // obtiene el contacto con el collider de un enemigo en la capa de enemigos
 		foreach (Collider2D enemyHit in m_hitEnemyLayer)
 		{
+			// dañar enemigo
 			Debug.Log("Enemigo golpeado: " + enemyHit.name);
 		}
 	}
-
+	#endregion
 	#region METODOS DE DEBUG
 	private void OnDrawGizmosSelected()
 	{
