@@ -21,5 +21,12 @@ public class Bullet : MonoBehaviour
 		m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
 		m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
 	}
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.tag == "TriggerReturn")
+		{
+			Debug.Log(collision.name);
+		}
+	}
 	#endregion
 }
