@@ -176,6 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 139105370}
+  - component: {fileID: 139105371}
   - component: {fileID: 139105369}
   - component: {fileID: 139105368}
   - component: {fileID: 139105367}
@@ -384,6 +385,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &139105371
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139105362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb1f87e3576f60846978c4fbea9f11f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &409171183
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackKey: 323
   m_jumpKey: 32
+  m_dashKey: 304
 --- !u!4 &566443385
 Transform:
   m_ObjectHideFlags: 0
@@ -1183,14 +1204,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88396cc453ea04c4ba73256a97edb70e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_inputManager: {fileID: 566443384}
+  refRayoSuelo: {fileID: 1752847431}
   velocidadLateral: 3
   fuerzaSalto: 5
   fuerzaTorque: 20
-  refRayoSuelo: {fileID: 1752847431}
   mascaraSuelo:
     serializedVersion: 2
     m_Bits: 64
-  m_inputManager: {fileID: 566443384}
 --- !u!50 &1954617466
 Rigidbody2D:
   serializedVersion: 4
