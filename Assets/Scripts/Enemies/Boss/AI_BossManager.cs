@@ -7,7 +7,8 @@ public class AI_BossManager : MonoBehaviour
 {
 	#region VARIABLES
 	[Header("REFERENCIAS")]
-    [SerializeField] private AI_BossShooting m_bossShooting;
+	[SerializeField] private AI_BossShooting m_bossShooting;
+	[SerializeField] private Animator m_animator;
 
 	[SerializeField] private int m_currentState = (int)BossStates.Basic;
 	private bool m_canBasicShot = true;
@@ -43,6 +44,14 @@ public class AI_BossManager : MonoBehaviour
 			if (m_canBasicShot && !m_canLaserShot)
 			{
 				m_bossShooting.BasicShot();
+				if (m_bossShooting._IsBasicShot)
+				{
+					m_animator.SetBool("isAttacking", true);
+				}
+				else
+				{
+					m_animator.SetBool("isAttacking", false);
+				}
 			}
 		}
 		else if (m_currentState == (int)BossStates.Aggressive)

@@ -14,7 +14,15 @@ public class AI_BossShooting : MonoBehaviour
 	[SerializeField] private float m_basicShotFireRate = 1.5f;
 	[SerializeField] private float m_laserShotFireRate = 0.5f;
 
+	private bool m_isBasicShot;
 	private float m_nextShot;
+	#endregion
+
+	#region PROPIEDADES
+	public bool _IsBasicShot
+	{
+		get => m_isBasicShot;
+	}
 	#endregion
 
 	#region METODOS UNTIY
@@ -29,9 +37,11 @@ public class AI_BossShooting : MonoBehaviour
 	{
 		if (Time.time > m_nextShot)
 		{
+			m_isBasicShot = true;
 			Instantiate(m_normalBullet, m_basicShotSpawnPoint.position, Quaternion.identity);
 			m_nextShot = Time.time + m_basicShotFireRate;
 		}
+		m_isBasicShot = false;
 	}
 	public void LaserShot()
 	{
