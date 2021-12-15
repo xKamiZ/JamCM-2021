@@ -119,8 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rb2d: {fileID: -5100081432962238976}
-  m_target: {fileID: 0}
-  m_bulletForce: 35
+  m_bulletForce: 15
 --- !u!61 &8542854501245334498
 BoxCollider2D:
   m_ObjectHideFlags: 0

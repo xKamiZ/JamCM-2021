@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
     [Header("REFERENCIAS")]
     [SerializeField] private InputManager m_inputManager;
     [SerializeField] private Transform refRayoSuelo;
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
+    [SerializeField] private Rigidbody2D m_rb2d;
+    [SerializeField] private Animator m_animator;
     [Header("PARAMETROS")]
     [SerializeField] private float velocidadLateral = 3;
     [SerializeField] private float fuerzaSalto = 5;
@@ -15,42 +18,33 @@ public class PlayerMove : MonoBehaviour
 
     private bool enSuelo;
     private float dashCounter, dashCoolCounter, activeMoveSpeed;
-    private Animator Animator;
-    private Rigidbody2D rb;
-
     private float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
 
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         activeMoveSpeed = velocidadLateral;
-        Animator = GetComponent<Animator>();
     }
-    void Update()
+    private void Update()
     {
         EnSuelo();
         Salto();
-        Movimiento();
         Animaciones();
     }
-    void Movimiento()
+	private void FixedUpdate()
+	{
+        Movimiento();
+    }
+
+    private void Movimiento()
     {
-        rb.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, rb.velocity.y);
-        Dash();
-        if (m_inputManager._Vertical > 0)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else if (m_inputManager._Horizontal < 0)
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-        }
+        m_rb2d.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, m_rb2d.velocity.y);
+        // Dash();
     }
     void Salto()
     {
         if (m_inputManager._JumpKey && enSuelo)
         {
-            rb.AddForce(transform.up * fuerzaSalto, ForceMode2D.Impulse);
+            m_rb2d.AddForce(transform.up * fuerzaSalto, ForceMode2D.Impulse);
         }
     }
     void EnSuelo()
@@ -66,6 +60,7 @@ public class PlayerMove : MonoBehaviour
             enSuelo = false;
         }
     }
+    /*
     void Dash()
     {
         if (m_inputManager._DashKey)
@@ -90,8 +85,17 @@ public class PlayerMove : MonoBehaviour
             dashCoolCounter -= Time.deltaTime;
         }
     }
+    */
     void Animaciones()
     {
-        Animator.SetFloat("running", Mathf.Abs(rb.velocity.x));
+        m_animator.SetFloat("running", Mathf.Abs(m_inputManager._Horizontal));
+		if (m_inputManager._Horizontal < 0)
+		{
+            m_spriteRenderer.flipX = true;
+		}
+		else if (m_inputManager._Horizontal > 0)
+		{
+            m_spriteRenderer.flipX = false;
+        }
     }
 }

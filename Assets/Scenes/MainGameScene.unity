@@ -395,7 +395,7 @@ Animator:
   m_GameObject: {fileID: 139105362}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eb1f87e3576f60846978c4fbea9f11f8, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1206,7 +1206,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_inputManager: {fileID: 566443384}
   refRayoSuelo: {fileID: 1752847431}
-  velocidadLateral: 3
+  m_spriteRenderer: {fileID: 1954617468}
+  m_rb2d: {fileID: 1954617466}
+  m_animator: {fileID: 1954617470}
+  velocidadLateral: 5
   fuerzaSalto: 5
   fuerzaTorque: 20
   mascaraSuelo:

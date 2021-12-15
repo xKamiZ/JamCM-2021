@@ -55,8 +55,8 @@ public class InputManager : MonoBehaviour
 	#region METODOS PROPIOS
 	protected void HandleInput()
 	{
-		m_horizontal = Input.GetAxis(m_xAxis);
-		m_vertical = Input.GetAxis(m_yAxis);
+		m_horizontal = Input.GetAxisRaw(m_xAxis);
+		m_vertical = Input.GetAxisRaw(m_yAxis);
 		m_isAttacking = Input.GetKeyDown(m_attackKey);
 		m_isJumping = Input.GetKeyDown(m_jumpKey);
 		m_isDashing = Input.GetKeyDown(m_dashKey);
