@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 	#region METODOS UNITY
 	private void Start()
 	{
-		m_target = GameObject.FindGameObjectWithTag("Player");
+		m_target = GameObject.FindGameObjectWithTag("Target");
 		m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
 		m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
 	}

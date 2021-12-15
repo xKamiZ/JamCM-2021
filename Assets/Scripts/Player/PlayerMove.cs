@@ -86,9 +86,10 @@ public class PlayerMove : MonoBehaviour
         }
     }
     */
-    void Animaciones()
+    private void Animaciones()
     {
         m_animator.SetFloat("running", Mathf.Abs(m_inputManager._Horizontal));
+
 		if (m_inputManager._Horizontal < 0)
 		{
             m_spriteRenderer.flipX = true;
