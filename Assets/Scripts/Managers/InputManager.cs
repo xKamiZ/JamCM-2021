@@ -7,15 +7,41 @@ public class InputManager : MonoBehaviour
 	#region VARIABLES
 	[Header("COMBATE")]
 	[SerializeField, Tooltip("Ataque básico")] private KeyCode m_attackKey = KeyCode.Mouse0;
+	[SerializeField, Tooltip("Salto")] private KeyCode m_jumpKey = KeyCode.Space;
+	[SerializeField, Tooltip("Deslizamiento")] private KeyCode m_dashKey = KeyCode.LeftShift;
+
+	private string m_yAxis = "Vertical";
+	private string m_xAxis = "Horizontal";
 
 	// Variables no visibles
-	private bool m_basicAttack;
+	private bool m_isAttacking;
+	private bool m_isJumping;
+	private bool m_isDashing;
+
+	private float m_horizontal;
+	private float m_vertical;
 	#endregion
 
 	#region PROPIEDADES
 	public bool _BasicAttack
 	{
-		get => m_basicAttack;
+		get => m_isAttacking;
+	}
+	public bool _JumpKey
+	{
+		get => m_isJumping;
+	}
+	public bool _DashKey
+	{
+		get => m_isDashing;
+	}
+	public float _Horizontal
+	{
+		get => m_horizontal;
+	}
+	public float _Vertical
+	{
+		get => m_vertical;
 	}
 	#endregion
 
@@ -29,7 +55,11 @@ public class InputManager : MonoBehaviour
 	#region METODOS PROPIOS
 	protected void HandleInput()
 	{
-		m_basicAttack = Input.GetKeyDown(m_attackKey);
+		m_horizontal = Input.GetAxis(m_xAxis);
+		m_vertical = Input.GetAxis(m_yAxis);
+		m_isAttacking = Input.GetKeyDown(m_attackKey);
+		m_isJumping = Input.GetKeyDown(m_jumpKey);
+		m_isDashing = Input.GetKeyDown(m_dashKey);
 	}
 	#endregion
 }

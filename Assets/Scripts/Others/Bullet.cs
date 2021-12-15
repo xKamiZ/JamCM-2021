@@ -7,10 +7,10 @@ public class Bullet : MonoBehaviour
 	#region VARIABLES
 	[Header("REFERENCIAS")]
 	[SerializeField] private Rigidbody2D m_rb2d;
-	[SerializeField] private GameObject m_target;
 	[Header("ATRIBUTOS")]
 	[SerializeField] private float m_bulletForce = 20.0f;
 
+	private GameObject m_target;
 	private Vector2 m_directionToTarget;
 	#endregion
 

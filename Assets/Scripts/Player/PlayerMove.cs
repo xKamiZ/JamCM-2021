@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    //private Animator Animator;
-    public float velocidadLateral = 3, fuerzaSalto = 5, fuerzaTorque = 20;
-    public float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
-    public bool enSuelo;
-    public LayerMask mascaraSuelo;
-    public Transform refRayoSuelo;
-    private float dashCounter, dashCoolCounter, activeMoveSpeed;
-    public Animator Animator;
+    [Header("REFERENCIAS")]
+    [SerializeField] private InputManager m_inputManager;
+    [SerializeField] private Transform refRayoSuelo;
+    [Header("PARAMETROS")]
+    [SerializeField] private float velocidadLateral = 3;
+    [SerializeField] private float fuerzaSalto = 5;
+    [SerializeField] private float fuerzaTorque = 20;
+    [SerializeField] private LayerMask mascaraSuelo;
 
+    private bool enSuelo;
+    private float dashCounter, dashCoolCounter, activeMoveSpeed;
+    private Animator Animator;
+    private Rigidbody2D rb;
+
+    private float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
 
     void Start()
     {
@@ -30,23 +35,22 @@ public class PlayerMove : MonoBehaviour
     }
     void Movimiento()
     {
-        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * activeMoveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, rb.velocity.y);
         Dash();
-        if (Input.GetAxis("Horizontal") > 0)
+        if (m_inputManager._Vertical > 0)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
-        else if (Input.GetAxis("Horizontal") < 0)
+        else if (m_inputManager._Horizontal < 0)
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
     void Salto()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        if (m_inputManager._JumpKey && enSuelo)
         {
             rb.AddForce(transform.up * fuerzaSalto, ForceMode2D.Impulse);
-
         }
     }
     void EnSuelo()
@@ -64,7 +68,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.LeftShift))
+        if (m_inputManager._DashKey)
         {
             if (dashCoolCounter <= 0 && dashCounter <= 0)
             {
