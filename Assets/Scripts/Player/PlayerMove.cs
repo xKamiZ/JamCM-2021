@@ -98,5 +98,18 @@ public class PlayerMove : MonoBehaviour
 		{
             m_spriteRenderer.flipX = false;
         }
+        if (m_inputManager._BasicAttack)
+        {
+            m_animator.SetBool("isAttacking",true);
+        }
+        if (!enSuelo)
+        {
+            m_animator.SetBool("Saltar", true);
+        }
+        else 
+        {
+            m_animator.SetBool("Saltar", false);
+        }
+
     }
 }
