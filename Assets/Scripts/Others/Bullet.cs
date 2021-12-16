@@ -13,6 +13,14 @@ public class Bullet : MonoBehaviour
 
 	private GameObject m_target;
 	private Vector2 m_directionToTarget;
+	private bool m_canBounce = false;
+	#endregion
+
+	#region PROPIEDADES
+	public bool _CanBounce
+	{
+		get => m_canBounce;
+	}
 	#endregion
 
 	#region METODOS UNITY
@@ -26,25 +34,32 @@ public class Bullet : MonoBehaviour
     {
 		DestruirBala();
     }
-	private void DestruirBala()
-    {
-		m_timerBala = m_timerBala - Time.deltaTime;
-		if (m_timerBala <= 0)
-		{
-			Destroy(gameObject);
-		}
-	}
     private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "TriggerReturn")
 		{
 			Debug.Log(collision.name);
+			m_canBounce = true;
+			m_target = GameObject.FindGameObjectWithTag("Boss");
+			m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
+			m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
 		}
-        if (collision.tag=="Player")
+        if (collision.tag == "Player")
         {
 			Debug.Log("Player daño");
 			Destroy(gameObject);
         }
+	}
+	#endregion
+
+	#region METODOS PROPIOS
+	private void DestruirBala()
+	{
+		m_timerBala = m_timerBala - Time.deltaTime;
+		if (m_timerBala <= 0)
+		{
+			Destroy(gameObject);
+		}
 	}
 	#endregion
 }

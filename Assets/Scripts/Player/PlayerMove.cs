@@ -16,9 +16,14 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float fuerzaTorque = 20;
     [SerializeField] private LayerMask mascaraSuelo;
 
-    private bool enSuelo;
+    private bool enSuelo, m_isLookingRight = true;
     private float dashCounter, dashCoolCounter, activeMoveSpeed;
     private float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
+
+    public bool _IsLookingRight
+	{
+        get => m_isLookingRight;
+	}
 
     private void Start()
     {
@@ -93,14 +98,12 @@ public class PlayerMove : MonoBehaviour
 		if (m_inputManager._Horizontal < 0)
 		{
             m_spriteRenderer.flipX = true;
-		}
+            m_isLookingRight = true;
+        }
 		else if (m_inputManager._Horizontal > 0)
 		{
             m_spriteRenderer.flipX = false;
-        }
-        if (m_inputManager._BasicAttack)
-        {
-            m_animator.SetBool("isAttacking",true);
+            m_isLookingRight = false;
         }
         if (!enSuelo)
         {

@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 	#region VARIABLES
 	[Header("REFERENCIAS")]
 	[SerializeField] private EventManager m_eventManager;
-	[SerializeField] private Animator m_playerAnimator;
+	[SerializeField] private Animator m_animator;
 	[SerializeField] private Transform m_attackPoint;
 
 	[Header("ATRIBUTOS")]
@@ -24,7 +24,6 @@ public class PlayerAttack : MonoBehaviour
 	{
 		// SUSCRIPCIONES A EVENTOS
 		m_eventManager.OnLeftClickPressed += M_eventManager_OnLeftClickPressed;
-
 		// OTROS
 	}
 	#endregion
@@ -35,7 +34,6 @@ public class PlayerAttack : MonoBehaviour
 	{
 		if (Time.time >= m_nextAttack)
 		{
-			Debug.Log("Jugador atacando!");
 			BasicAttack();
 			m_nextAttack = Time.time + 1.0f / m_attackDelay;
 		} // el evento ejecuta una función determinada
@@ -44,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
 	#region OTROS METODOS
 	private void BasicAttack()
 	{
-		// activar animacion de ataque basico
+		m_animator.SetBool("isAttacking", true);
 		Collider2D[] m_hitEnemyLayer = Physics2D.OverlapCircleAll(m_attackPoint.position, m_attackRange, m_enemyLayer); // obtiene el contacto con el collider de un enemigo en la capa de enemigos
 		foreach (Collider2D enemyHit in m_hitEnemyLayer)
 		{
