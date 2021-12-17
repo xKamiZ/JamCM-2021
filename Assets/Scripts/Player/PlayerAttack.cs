@@ -17,6 +17,14 @@ public class PlayerAttack : MonoBehaviour
 
 	// Variables no visibles
 	private float m_nextAttack = 0.0f;
+	private static bool m_isAttacking = false;
+	#endregion
+
+	#region PROPIEDADES
+	public static bool _IsAttacking
+	{
+		get => m_isAttacking;
+	}
 	#endregion
 
 	#region METODOS UNITY
@@ -34,14 +42,15 @@ public class PlayerAttack : MonoBehaviour
 	{
 		if (Time.time >= m_nextAttack)
 		{
-			BasicAttack();
+			StartCoroutine("BasicAttack");
 			m_nextAttack = Time.time + 1.0f / m_attackDelay;
 		} // el evento ejecuta una función determinada
 	} // se llama al evento con la condicion correspondiente (mirar event manager)
 	#endregion
 	#region OTROS METODOS
-	private void BasicAttack()
+	IEnumerator BasicAttack()
 	{
+		m_isAttacking = true;
 		m_animator.SetBool("isAttacking", true);
 		Collider2D[] m_hitEnemyLayer = Physics2D.OverlapCircleAll(m_attackPoint.position, m_attackRange, m_enemyLayer); // obtiene el contacto con el collider de un enemigo en la capa de enemigos
 		foreach (Collider2D enemyHit in m_hitEnemyLayer)
@@ -49,6 +58,8 @@ public class PlayerAttack : MonoBehaviour
 			// dañar enemigo
 			Debug.Log("Enemigo golpeado: " + enemyHit.name);
 		}
+		yield return new WaitForSeconds(0.1f);
+		m_isAttacking = false;
 	}
 	#endregion
 	#region METODOS DE DEBUG

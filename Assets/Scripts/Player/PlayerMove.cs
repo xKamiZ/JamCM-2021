@@ -10,20 +10,15 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private SpriteRenderer m_spriteRenderer;
     [SerializeField] private Rigidbody2D m_rb2d;
     [SerializeField] private Animator m_animator;
+    [SerializeField] private Transform m_bounceTriggerTransform;
     [Header("PARAMETROS")]
     [SerializeField] private float velocidadLateral = 3;
     [SerializeField] private float fuerzaSalto = 5;
-    [SerializeField] private float fuerzaTorque = 20;
     [SerializeField] private LayerMask mascaraSuelo;
 
-    private bool enSuelo, m_isLookingRight = true;
+    private bool enSuelo, m_isSpriteFlipped;
     private float dashCounter, dashCoolCounter, activeMoveSpeed;
     private float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
-
-    public bool _IsLookingRight
-	{
-        get => m_isLookingRight;
-	}
 
     private void Start()
     {
@@ -43,16 +38,15 @@ public class PlayerMove : MonoBehaviour
     private void Movimiento()
     {
         m_rb2d.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, m_rb2d.velocity.y);
-        // Dash();
     }
-    void Salto()
+    private void Salto()
     {
         if (m_inputManager._JumpKey && enSuelo)
         {
             m_rb2d.AddForce(transform.up * fuerzaSalto, ForceMode2D.Impulse);
         }
     }
-    void EnSuelo()
+    private void EnSuelo()
     {
         RaycastHit2D hit = Physics2D.Raycast(refRayoSuelo.position, -transform.up, 0.3f, mascaraSuelo);
         Debug.DrawRay(refRayoSuelo.position, -transform.up * 0.3f, Color.red);
@@ -65,32 +59,6 @@ public class PlayerMove : MonoBehaviour
             enSuelo = false;
         }
     }
-    /*
-    void Dash()
-    {
-        if (m_inputManager._DashKey)
-        {
-            if (dashCoolCounter <= 0 && dashCounter <= 0)
-            {
-                activeMoveSpeed = dashSpeed;
-                dashCounter = dashLength;
-            }
-        }
-        if (dashCounter > 0)
-        {
-            dashCounter -= Time.deltaTime;
-            if (dashCounter <= 0)
-            {
-                activeMoveSpeed = velocidadLateral;
-                dashCoolCounter = dashCooldown;
-            }
-        }
-        if (dashCoolCounter > 0)
-        {
-            dashCoolCounter -= Time.deltaTime;
-        }
-    }
-    */
     private void Animaciones()
     {
         m_animator.SetFloat("running", Mathf.Abs(m_inputManager._Horizontal));
@@ -98,12 +66,10 @@ public class PlayerMove : MonoBehaviour
 		if (m_inputManager._Horizontal < 0)
 		{
             m_spriteRenderer.flipX = true;
-            m_isLookingRight = true;
         }
-		else if (m_inputManager._Horizontal > 0)
+        else if (m_inputManager._Horizontal > 0)
 		{
             m_spriteRenderer.flipX = false;
-            m_isLookingRight = false;
         }
         if (!enSuelo)
         {
@@ -113,6 +79,14 @@ public class PlayerMove : MonoBehaviour
         {
             m_animator.SetBool("Saltar", false);
         }
-
     }
+    /*
+    private void RotateBounce()
+	{
+		if (m_spriteRenderer.flipX)
+		{
+            m_bounceTriggerTransform.transform.Rotate(m_bounceTriggerTransform.transform.rotation.x, 180.0f, m_bounceTriggerTransform.transform.rotation.z);
+        }
+    }
+    */
 }
