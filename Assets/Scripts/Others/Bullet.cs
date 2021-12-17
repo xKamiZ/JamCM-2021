@@ -38,11 +38,13 @@ public class Bullet : MonoBehaviour
 	{
 		if (collision.tag == "TriggerReturn")
 		{
-			Debug.Log(collision.name);
 			m_canBounce = true;
-			m_target = GameObject.FindGameObjectWithTag("Boss");
-			m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
-			m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
+			if (PlayerAttack._IsAttacking)
+			{
+				m_target = GameObject.FindGameObjectWithTag("Boss");
+				m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
+				m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
+			}
 		}
         if (collision.tag == "Player")
         {
