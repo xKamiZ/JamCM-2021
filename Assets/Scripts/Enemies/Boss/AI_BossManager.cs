@@ -9,11 +9,14 @@ public class AI_BossManager : MonoBehaviour
 	[Header("REFERENCIAS")]
 	[SerializeField] private AI_BossShooting m_bossShooting;
 	[SerializeField] private Animator m_animator;
+	[SerializeField] private HealthBarController m_healthBarController;
 
 	[SerializeField] private int m_currentState = (int)BossStates.Basic;
 	private bool m_canBasicShot = true;
 	private bool m_canLaserShot = false;
 	private bool m_canMove = true;
+
+	private HealthSystem m_healthSystem = new HealthSystem(100);
 	#endregion
 
 	#region PROPIEDADES
@@ -35,6 +38,10 @@ public class AI_BossManager : MonoBehaviour
 	#endregion
 
 	#region METODOS UNITY
+	private void Start()
+	{
+		m_healthBarController.Init(m_healthSystem);
+	}
 	private void Update()
 	{
 		if (m_bossShooting._CanShoot)
@@ -72,6 +79,7 @@ public class AI_BossManager : MonoBehaviour
 		if (collision.tag == "Projectile")
 		{
 			m_animator.SetTrigger("isHit");
+			m_healthSystem.TakeDamage(10);
 		}
 	}
 	#endregion
