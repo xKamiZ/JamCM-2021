@@ -8,6 +8,7 @@ TagManager:
   - TriggerReturn
   - Target
   - Boss
+  - Bala
   layers:
   - Default
   - TransparentFX

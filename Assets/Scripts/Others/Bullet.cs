@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Bullet : MonoBehaviour
 {
 	#region VARIABLES
@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
 	private GameObject m_target;
 	private Vector2 m_directionToTarget;
 	private bool m_canBounce = false;
+
 	#endregion
 
 	#region PROPIEDADES
@@ -29,6 +30,7 @@ public class Bullet : MonoBehaviour
 		m_target = GameObject.FindGameObjectWithTag("Target");
 		m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
 		m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
+
 	}
     private void Update()
     {
@@ -49,7 +51,7 @@ public class Bullet : MonoBehaviour
         if (collision.tag == "Player")
         {
 			Debug.Log("Player daño");
-			Destroy(gameObject);
+			Destroy(collision.gameObject);
         }
 	}
 	#endregion
