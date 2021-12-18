@@ -64,5 +64,12 @@ public class AI_BossManager : MonoBehaviour
 			}
 		}
 	}
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.tag == "Projectile")
+		{
+			m_animator.SetTrigger("isHit");
+		}
+	}
 	#endregion
 }
