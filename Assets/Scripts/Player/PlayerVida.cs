@@ -10,6 +10,9 @@ public class PlayerVida : MonoBehaviour
     public RectTransform PosicionPrimerCorazon;
     public Canvas MyCanvas;
     public int OffSet;
+    public GameObject Boss;
+    
+    
     void Start()
     {
         Transform PosCorazon = PosicionPrimerCorazon;
@@ -24,7 +27,20 @@ public class PlayerVida : MonoBehaviour
    
     void Update()
     {
-        
+        Muerte();
+    }
+    void Muerte()
+    {
+        if (CantCorazones <=0)
+        {
+            Destroy(gameObject);
+            Destroy(COrazon);
+            Boss.SetActive(false);          
+        }
+        else
+        {
+            Boss.SetActive(true);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -1930,6 +1930,7 @@ MonoBehaviour:
   PosicionPrimerCorazon: {fileID: 1732312389}
   MyCanvas: {fileID: 2043848507}
   OffSet: 35
+  Boss: {fileID: 6123368647315728614, guid: e1c31a9cd872b41419a8a77601608091, type: 3}
 --- !u!1 &2035517383
 GameObject:
   m_ObjectHideFlags: 0
