@@ -9,11 +9,14 @@ public class AI_BossManager : MonoBehaviour
 	[Header("REFERENCIAS")]
 	[SerializeField] private AI_BossShooting m_bossShooting;
 	[SerializeField] private Animator m_animator;
+	[SerializeField] private HealthBarController m_healthBarController;
 
 	[SerializeField] private int m_currentState = (int)BossStates.Basic;
 	private bool m_canBasicShot = true;
 	private bool m_canLaserShot = false;
 	private bool m_canMove = true;
+
+	private HealthSystem m_healthSystem = new HealthSystem(100);
 	#endregion
 
 	#region PROPIEDADES
@@ -35,32 +38,39 @@ public class AI_BossManager : MonoBehaviour
 	#endregion
 
 	#region METODOS UNITY
+	private void Start()
+	{
+		m_healthBarController.Init(m_healthSystem);
+	}
 	private void Update()
 	{
-		if (m_currentState == (int)BossStates.Basic)
+		if (m_bossShooting._CanShoot)
 		{
-			m_canBasicShot = true;
-			m_canLaserShot = false;
-			if (m_canBasicShot && !m_canLaserShot)
+			if (m_currentState == (int)BossStates.Basic)
 			{
-				m_bossShooting.BasicShot();
-				if (m_bossShooting._IsBasicShot)
+				m_canBasicShot = true;
+				m_canLaserShot = false;
+				if (m_canBasicShot && !m_canLaserShot)
 				{
-					m_animator.SetBool("isAttacking", true);
-				}
-				else
-				{
-					m_animator.SetBool("isAttacking", false);
+					m_bossShooting.BasicShot();
+					if (m_bossShooting._IsBasicShot)
+					{
+						m_animator.SetBool("isAttacking", true);
+					}
+					else
+					{
+						m_animator.SetBool("isAttacking", false);
+					}
 				}
 			}
-		}
-		else if (m_currentState == (int)BossStates.Aggressive)
-		{
-			m_canBasicShot = false;
-			m_canLaserShot = true;
-			if (m_canLaserShot && !m_canBasicShot)
+			else if (m_currentState == (int)BossStates.Aggressive)
 			{
-				m_bossShooting.LaserShot();
+				m_canBasicShot = false;
+				m_canLaserShot = true;
+				if (m_canLaserShot && !m_canBasicShot)
+				{
+					m_bossShooting.LaserShot();
+				}
 			}
 		}
 	}
@@ -69,6 +79,7 @@ public class AI_BossManager : MonoBehaviour
 		if (collision.tag == "Projectile")
 		{
 			m_animator.SetTrigger("isHit");
+			m_healthSystem.TakeDamage(10);
 		}
 	}
 	#endregion
