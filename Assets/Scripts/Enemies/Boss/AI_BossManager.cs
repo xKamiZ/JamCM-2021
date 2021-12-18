@@ -37,30 +37,33 @@ public class AI_BossManager : MonoBehaviour
 	#region METODOS UNITY
 	private void Update()
 	{
-		if (m_currentState == (int)BossStates.Basic)
+		if (m_bossShooting._CanShoot)
 		{
-			m_canBasicShot = true;
-			m_canLaserShot = false;
-			if (m_canBasicShot && !m_canLaserShot)
+			if (m_currentState == (int)BossStates.Basic)
 			{
-				m_bossShooting.BasicShot();
-				if (m_bossShooting._IsBasicShot)
+				m_canBasicShot = true;
+				m_canLaserShot = false;
+				if (m_canBasicShot && !m_canLaserShot)
 				{
-					m_animator.SetBool("isAttacking", true);
-				}
-				else
-				{
-					m_animator.SetBool("isAttacking", false);
+					m_bossShooting.BasicShot();
+					if (m_bossShooting._IsBasicShot)
+					{
+						m_animator.SetBool("isAttacking", true);
+					}
+					else
+					{
+						m_animator.SetBool("isAttacking", false);
+					}
 				}
 			}
-		}
-		else if (m_currentState == (int)BossStates.Aggressive)
-		{
-			m_canBasicShot = false;
-			m_canLaserShot = true;
-			if (m_canLaserShot && !m_canBasicShot)
+			else if (m_currentState == (int)BossStates.Aggressive)
 			{
-				m_bossShooting.LaserShot();
+				m_canBasicShot = false;
+				m_canLaserShot = true;
+				if (m_canLaserShot && !m_canBasicShot)
+				{
+					m_bossShooting.LaserShot();
+				}
 			}
 		}
 	}

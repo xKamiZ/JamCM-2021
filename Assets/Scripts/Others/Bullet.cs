@@ -14,12 +14,18 @@ public class Bullet : MonoBehaviour
 	private GameObject m_target;
 	private Vector2 m_directionToTarget;
 	private bool m_canBounce = false;
+	private static bool m_isPlayer = false;
 	#endregion
 
 	#region PROPIEDADES
 	public bool _CanBounce
 	{
 		get => m_canBounce;
+	}
+	public static bool _IsPlayer
+	{
+		get => m_isPlayer;
+		set => m_isPlayer = value;
 	}
 	#endregion
 
@@ -46,11 +52,12 @@ public class Bullet : MonoBehaviour
 				m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
 			}
 		}
-        if (collision.tag == "Player")
+        if (collision.tag == "DamageTarget")
         {
-			Debug.Log("Player daño");
+			m_isPlayer = true;
 			Destroy(gameObject);
         }
+		
 	}
 	#endregion
 

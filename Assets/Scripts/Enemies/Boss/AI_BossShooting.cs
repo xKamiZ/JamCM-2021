@@ -14,7 +14,8 @@ public class AI_BossShooting : MonoBehaviour
 	[SerializeField] private float m_basicShotFireRate = 1.5f;
 	[SerializeField] private float m_laserShotFireRate = 0.5f;
 
-	private bool m_isBasicShot;
+	private GameObject m_playerExists;
+	private bool m_isBasicShot, m_canShoot = true;
 	private float m_nextShot;
 	#endregion
 
@@ -23,12 +24,28 @@ public class AI_BossShooting : MonoBehaviour
 	{
 		get => m_isBasicShot;
 	}
+	public bool _CanShoot
+	{
+		get => m_canShoot;
+	}
 	#endregion
 
 	#region METODOS UNTIY
 	private void Start()
 	{
 		m_nextShot = Time.time;
+	}
+	private void Update()
+	{
+		m_playerExists = GameObject.FindGameObjectWithTag("Player");
+		if (m_playerExists != null)
+		{
+			m_canShoot = true;
+		}
+		else
+		{
+			m_canShoot = false;
+		}
 	}
 	#endregion
 

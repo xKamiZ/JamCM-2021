@@ -32,7 +32,6 @@ public class PlayerAttack : MonoBehaviour
 	{
 		// SUSCRIPCIONES A EVENTOS
 		m_eventManager.OnLeftClickPressed += M_eventManager_OnLeftClickPressed;
-		// OTROS
 	}
 	#endregion
 
