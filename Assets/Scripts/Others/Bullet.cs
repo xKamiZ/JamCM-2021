@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 	private GameObject m_target;
 	private Vector2 m_directionToTarget;
 	private bool m_canBounce = false;
-	private static bool m_isPlayer = false;
+	private static bool m_isPlayer = false, m_isEnemy = false;
 	#endregion
 
 	#region PROPIEDADES
@@ -26,6 +26,11 @@ public class Bullet : MonoBehaviour
 	{
 		get => m_isPlayer;
 		set => m_isPlayer = value;
+	}
+	public static bool _IsEnemy
+	{
+		get => m_isEnemy;
+		set => m_isEnemy = value;
 	}
 	#endregion
 
@@ -57,7 +62,11 @@ public class Bullet : MonoBehaviour
 			m_isPlayer = true;
 			Destroy(gameObject);
         }
-		
+		if (collision.tag == "DamageEnemy")
+		{
+			m_isEnemy = true;
+			Destroy(gameObject);
+		}
 	}
 	#endregion
 

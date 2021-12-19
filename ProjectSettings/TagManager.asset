@@ -9,6 +9,7 @@ TagManager:
   - Target
   - Boss
   - DamageTarget
+  - DamageEnemy
   layers:
   - Default
   - TransparentFX
