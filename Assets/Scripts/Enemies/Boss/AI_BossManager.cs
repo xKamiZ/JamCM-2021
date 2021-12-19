@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public enum BossStates { Basic, Aggressive }
 
 public class AI_BossManager : MonoBehaviour
@@ -23,7 +24,7 @@ public class AI_BossManager : MonoBehaviour
 	public bool _CanBasicShot
 	{
 		get => m_canBasicShot;
-		set => m_canLaserShot = value;
+		set => m_canBasicShot = value;
 	}
 	public bool _CanLaserShot
 	{
@@ -40,6 +41,7 @@ public class AI_BossManager : MonoBehaviour
 	#region METODOS UNITY
 	private void Start()
 	{
+		m_bossShooting._CanShoot = true;
 		m_healthBarController.Init(m_healthSystem);
 	}
 	private void Update()
@@ -72,6 +74,11 @@ public class AI_BossManager : MonoBehaviour
 					m_bossShooting.LaserShot();
 				}
 			}
+			if (m_healthSystem._GetHealth() <= 0)
+			{
+				m_bossShooting._CanShoot = false;
+				BossDie();
+			}
 		}
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -80,7 +87,13 @@ public class AI_BossManager : MonoBehaviour
 		{
 			m_animator.SetTrigger("isHit");
 			m_healthSystem.TakeDamage(10);
+			Debug.Log(m_healthSystem._GetHealth()); 
 		}
+	}
+	private void BossDie()
+	{
+		Destroy(gameObject);
+		SceneManager.LoadScene(0);
 	}
 	#endregion
 }

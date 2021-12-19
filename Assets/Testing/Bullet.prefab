@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5183136792060176953}
   - component: {fileID: -5100081432962238976}
   - component: {fileID: -7106749930882472242}
-  - component: {fileID: 8542854501245334498}
+  - component: {fileID: -5382918055415173553}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Projectile
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6123368647315728614}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.5, y: -0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5183136792060176953
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: -9095717837082945937, guid: db315ea175aa9f4459fc6abe49c929d2, type: 3}
-  m_Color: {r: 0.6415094, g: 0.20879316, b: 0.43793252, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a61a32c916a66e2469d084bd5900f5e8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -120,8 +120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rb2d: {fileID: -5100081432962238976}
   m_bulletForce: 15
---- !u!61 &8542854501245334498
-BoxCollider2D:
+  m_timerBala: 3
+--- !u!58 &-5382918055415173553
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -134,15 +135,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 3}
-  m_EdgeRadius: 0
+  m_Radius: 0.35

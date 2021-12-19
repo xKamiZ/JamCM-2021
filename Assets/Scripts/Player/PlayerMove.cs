@@ -17,11 +17,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask mascaraSuelo;
 
     private bool enSuelo, m_isSpriteFlipped;
-    private float dashCounter, dashCoolCounter, activeMoveSpeed;
-    private float dashSpeed, dashLength = 0.5f, dashCooldown = 1f;
+    private float activeMoveSpeed;
 
     private void Start()
     {
+        PlayerHealth._IsPlayerDead = false;
         activeMoveSpeed = velocidadLateral;
     }
     private void Update()
@@ -37,7 +37,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Movimiento()
     {
-        m_rb2d.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, m_rb2d.velocity.y);
+		if (!PlayerHealth._IsPlayerDead)
+		{
+            m_rb2d.velocity = new Vector2(m_inputManager._Horizontal * activeMoveSpeed, m_rb2d.velocity.y);
+        }
     }
     private void Salto()
     {

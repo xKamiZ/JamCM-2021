@@ -10,6 +10,7 @@ public class AI_BossShooting : MonoBehaviour
 	[SerializeField] private Transform m_laserShotSpawnPoint;
 	[SerializeField] private GameObject m_normalBullet;
 	[SerializeField] private GameObject m_laserBullet;
+	[SerializeField] private GameObject m_bossDam;
 	[Header("PARAMETROS")]
 	[SerializeField] private float m_basicShotFireRate = 1.5f;
 	[SerializeField] private float m_laserShotFireRate = 0.5f;
@@ -27,6 +28,7 @@ public class AI_BossShooting : MonoBehaviour
 	public bool _CanShoot
 	{
 		get => m_canShoot;
+		set => m_canShoot = value;
 	}
 	#endregion
 

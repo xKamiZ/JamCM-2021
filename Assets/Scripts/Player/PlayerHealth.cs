@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class PlayerHealth : MonoBehaviour
 	}
 	private void Update()
 	{
-		CheckHealth();
 		SetHeartsVisuals();
 		if (Bullet._IsPlayer)
 		{
@@ -52,10 +52,16 @@ public class PlayerHealth : MonoBehaviour
 		if (m_health >= t_ammount)
 		{
 			m_health -= t_ammount;
+			m_animator.SetTrigger("isDamaged");
 		}
 		else
 		{
 			t_ammount = 1;
+		}
+		if (m_health <= 0)
+		{
+			m_isPlayerDead = true;
+			StartCoroutine("Die");
 		}
 	}
 	private void SetHeartsVisuals()
@@ -81,14 +87,12 @@ public class PlayerHealth : MonoBehaviour
 			}
 		}
 	} // establece en el ui el numero de corazones correspondientes a los puestos en m_numHearts
-	private void CheckHealth()
+	IEnumerator Die()
 	{
-		if (m_health <= 0)
-		{
-			// anim de morir
-			Destroy(gameObject);
-			m_sceneReload._CanReloadScene = true;
-		}
+		m_animator.SetTrigger("isDead");
+		yield return new WaitForSeconds(1.45f);
+		Destroy(gameObject);
+		SceneManager.LoadScene(0);
 	}
 	#endregion
 }

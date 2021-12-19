@@ -40,12 +40,13 @@ public class Bullet : MonoBehaviour
 		m_target = GameObject.FindGameObjectWithTag("Target");
 		m_directionToTarget = (m_target.transform.position - transform.position).normalized * m_bulletForce;
 		m_rb2d.velocity = new Vector2(m_directionToTarget.x, m_directionToTarget.y);
+		TagChanger.ChangeTag(gameObject, "Projectile");
 	}
     private void Update()
     {
 		DestruirBala();
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
+	}
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "TriggerReturn")
 		{

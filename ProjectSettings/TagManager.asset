@@ -10,6 +10,7 @@ TagManager:
   - Boss
   - DamageTarget
   - DamageEnemy
+  - TagChanger
   layers:
   - Default
   - TransparentFX
